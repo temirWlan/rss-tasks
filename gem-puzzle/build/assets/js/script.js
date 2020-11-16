@@ -142,8 +142,12 @@ var Cell = /*#__PURE__*/function () {
   _createClass(Cell, [{
     key: "init",
     value: function init() {
-      if (this.item) {
-        this.parent.append(this.item);
+      try {
+        if (this.item) {
+          this.parent.append(this.item);
+        }
+      } catch (e) {
+        console.log(e);
       }
     }
   }]);
@@ -263,7 +267,7 @@ var Puzzle = /*#__PURE__*/function () {
     };
     this.ticks = 0;
     this.size = _services_storage__WEBPACK_IMPORTED_MODULE_20__["get"]('gameSettings') ? +_services_storage__WEBPACK_IMPORTED_MODULE_20__["get"]('gameSettings')['size'] : 3;
-    this.numbers = [];
+    this.numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8];
     this.sortedNumbers = this.numbers.sort(function (a, b) {
       return a - b;
     });

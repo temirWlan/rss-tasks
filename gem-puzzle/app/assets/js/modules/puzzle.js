@@ -18,7 +18,7 @@ export default class Puzzle {
 		};
 		this.ticks = 0;
 		this.size = storage.get('gameSettings') ? +storage.get('gameSettings')['size'] : 3;
-		this.numbers = [];
+		this.numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 		this.sortedNumbers = this.numbers.sort((a, b) => a - b);
 		this.list = [
 			{label: 'New Game', path: '#'},
@@ -363,12 +363,14 @@ export default class Puzzle {
 
 	generateItems(arr) {
 		if (arr && arr.length) {
-			return arr.map(number => new Cell({
-				parent: this.grid, 
-				value: `${number}`,
-				ticks: this.ticks,
-				field: this.moveField
-			}).init());
+			return arr.map(number => {
+				return new Cell({
+					parent: this.grid, 
+					value: `${number}`,
+					ticks: this.ticks,
+					field: this.moveField
+				}).init()
+			});
 		}
 	}
 

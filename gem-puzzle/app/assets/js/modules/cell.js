@@ -9,8 +9,12 @@ export default class Cell {
 	}
 
 	init() {
-		if (this.item) {
-			this.parent.append(this.item);
+		try {
+			if (this.item) {
+				this.parent.append(this.item);
+			}
+		} catch (e) {
+			console.log(e);
 		}
 	}
 }
