@@ -1,0 +1,176 @@
+*, *:before, *:after 
+	margin: 0
+	padding: 0
+	box-sizing: border-box 
+
+.wrapper
+	display: flex 
+	justify-content: center
+	align-items: center 
+	min-height: 100vh
+
+[data-number="0"] 
+	visibility: hidden
+
+.screen 
+	display: none
+	flex-direction: column 
+	align-items: center
+
+.active
+	display: flex
+
+
+.message
+	margin-bottom: 20px
+	display: flex 
+	flex-direction: column
+	font-size: 20px
+	color: #fff 
+	text-align: center
+
+.screen
+	margin: 0 auto
+	width: 80%
+	flex-direction: column 
+	justify-content: center
+	align-items: center
+	color: #fff
+
+	&__description 
+		font-size: 16px
+		&:not(:first-child)
+			margin-top: 10px
+
+.save-btn
+	font-weight: bold
+	color: rgba(255, 255, 255, 0.9)
+	text-decoration: none
+	transition: all 0.3s ease 0s
+
+	&:hover 
+		color: rgba(255, 255, 255, 1)
+		text-decoration: underline
+
+.nav-btn 
+	margin-top: 40px
+	padding: 10px 20px
+	border: none
+	outline: none
+	border-radius: 5px
+	cursor: pointer
+	transition: all 0.5 ease 0s
+
+	&:hover 
+		transform: scale(0.9)
+
+
+.box 
+	width: 400px
+	height: 400px
+	position: relative
+
+	&__panel
+		width: 100%
+		display: flex 
+		justify-content: space-between
+		align-items: center		
+		white-space: nowrap
+
+	&__menu
+		width: 100%
+		height: 100%
+		display: none
+		justify-content: center
+		align-items: center
+		position: absolute
+		top: 40px
+		left: 0
+		background-color: rgba(0, 0, 0, 0.7)
+		border: 1px solid #000
+
+		&-title
+			margin-bottom: 30px
+			font-size: 28px
+
+		&-list 
+			list-style-type: none
+			text-align: center
+
+			&-item 
+				&:not(:first-child)
+					margin-top: 15px
+
+				& a
+					color: #fff 
+					font-size: 22px
+					font-weight: bold
+					text-decoration: none
+
+					&:hover 
+						text-decoration: underline
+
+		&-trigger
+			color: #000
+
+			&:hover 
+				color: #0f0
+
+		&-table 
+			width: 80%
+
+			& td 
+				text-align: center
+
+	&__grid 
+		margin-top: 20px
+		width: 100%
+		height: 100%
+		display: grid 
+		border: 1px solid #000
+		padding: 2px
+		background-color: #ebeb34
+
+		& button 
+			cursor: pointer
+			font-size: 22px
+			font-weight: bold
+			border-radius: 3px
+			background-color: #fff
+
+			&:hover
+				background-color: rgba(255, 255, 255, 0.7)
+
+.saved-games-table
+	width: 64%
+
+@media (max-width: 768px)
+	.box
+		width: 340px
+		height: 340px
+
+		&__menu
+			&-title 
+				margin-bottom: 20px
+				font-size: 24px
+
+	.screen
+		&__description 
+			&:not(:first-child) 
+				margin-top: 5px
+
+	.nav-btn 
+		margin-top: 20px
+		padding: 7px 15px
+
+@media (max-width: 420px) 
+	.box
+		width: 300px
+		height: 300px
+		&__desc 
+			padding: 0
+		&__menu-list-item a 
+			font-size: 18px
+
+	.message
+		font-size: 16px
