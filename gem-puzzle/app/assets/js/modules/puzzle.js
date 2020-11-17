@@ -46,20 +46,28 @@ export default class Puzzle {
 				time: '00:02:33',
 				moves: '33',
 				size: '3x3'
-			},
-			...storage.get('results')
+			}
 		];
 		this.savedGames = [
 			{
 				time: this.time,
 				size: this.size,
 				moves: this.moves
-			},
-			// ...storage.get('savedGames')
+			}
 		];
 	}
 
 	init() {
+		const results = storage.get('results');
+		const savedGames = storage.get('savedGames');
+
+		if (results && results.length) {
+			this.bestScores.push(...results);
+		}
+		if (savedGames && savedGames.length) {
+			this.savedGames.push(...savedGames);
+		}
+
 		this.numbers = this.generateRandomArray(this.size ** 2)
 		this.sortedNumbers = [...this.numbers].sort((a, b) => a - b);
 		this.render();
@@ -398,6 +406,7 @@ export default class Puzzle {
 		}, 5000);		
 
 		const savedGames = storage.get('savedGames'); 
+		console.log(savedGames);
 		const obj = {
 			time: this.time,
 			size: this.size,
