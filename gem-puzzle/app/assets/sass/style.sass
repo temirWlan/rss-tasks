@@ -9,8 +9,19 @@
 	align-items: center 
 	min-height: 100vh
 
-[data-number="0"] 
-	visibility: hidden
+.box__grid [data-number="0"] 
+	// visibility: hidden
+	background-color: #ebeb34
+	color: transparent
+	border: none
+	cursor: default
+	outline: none
+
+	&:hover 
+		background-color: #ebeb34
+		color: transparent
+		border: none
+
 
 .screen 
 	display: none
@@ -20,6 +31,11 @@
 .active
 	display: flex
 
+.hidden
+	visibility: hidden
+
+.visible 
+	visibility: visible 
 
 .message
 	margin-bottom: 20px
@@ -130,6 +146,7 @@
 		border: 1px solid #000
 		padding: 2px
 		background-color: #ebeb34
+		position: relative
 
 		& button 
 			cursor: pointer

@@ -55,6 +55,7 @@ export default class Puzzle {
 				moves: this.moves
 			}
 		];
+		this.currentCell = {};
 	}
 
 	init() {
@@ -82,17 +83,25 @@ export default class Puzzle {
 			}		
 		});
 
-		this.grid.addEventListener('click', e => { 
+		this.grid.addEventListener('click', e => { 			
 			this.removeItems('button');
 
 			const targetIndex = this.numbers.findIndex(num => num === +e.target.textContent);
 			const zeroIndex = this.numbers.findIndex(num => num === 0);
 
-			const top = zeroIndex - this.size < 0 ? null : zeroIndex - this.size;
-			const right = (zeroIndex + 1) % this.size === 0 ? null : zeroIndex + 1;
-			const bottom = zeroIndex + this.size >= this.size ** 2 ? null : zeroIndex + this.size;
-			const left = (zeroIndex + 1) % this.size === 1 ? null : zeroIndex - 1;
-			const idx = [top, right, left, bottom];
+			// const top = zeroIndex - this.size < 0 ? null : zeroIndex - this.size;
+			// const right = (zeroIndex + 1) % this.size === 0 ? null : zeroIndex + 1;
+			// const bottom = zeroIndex + this.size >= this.size ** 2 ? null : zeroIndex + this.size;
+			// const left = (zeroIndex + 1) % this.size === 1 ? null : zeroIndex - 1;
+			// const idx = [top, right, left, bottom];
+
+			this.availablePositions = {
+				top: zeroIndex - this.size < 0 ? null : zeroIndex - this.size,
+				right: (zeroIndex + 1) % this.size === 0 ? null : zeroIndex + 1,
+				bottom: zeroIndex + this.size >= this.size ** 2 ? null : zeroIndex + this.size,
+				left: (zeroIndex + 1) % this.size === 1 ? null : zeroIndex - 1
+			}
+			const idx = Object.values(this.availablePositions);
 			
 			for (let i = 0; i < idx.length; i++) {
 				if (targetIndex === idx[i]) {
@@ -139,6 +148,7 @@ export default class Puzzle {
 			}
 		});
 
+
 		this.openMenu(this.menuTrigger, this.menu);
 		this.menuTrigger.addEventListener('click', e => this.toggleMenu(e));
 		this.listItems.forEach(item => item.addEventListener('click', (e) => this.routeMenu(e)));
@@ -150,6 +160,74 @@ export default class Puzzle {
 			this.sound
 		]); 
 		document.body.append(this.wrapper);
+	}
+
+	onDragStart(item, inactiveClass) {
+		setTimeout(() => {
+			this.currentCell = item;
+			item.classList.add(inactiveClass);
+		}, 100)
+	}
+
+	onDragEnd(item, inactiveClass) {
+		item.classList.remove(inactiveClass);
+	}
+
+	onDrop(item) {
+		this.removeItems('button');
+		const zeroIndex = this.numbers.findIndex(number => number === +item.dataset.number);
+		const targetIndex = this.numbers.findIndex(number => number === +this.currentCell.dataset.number);
+
+		this.availablePositions = {
+			top: zeroIndex - this.size < 0 ? null : zeroIndex - this.size,
+			right: (zeroIndex + 1) % this.size === 0 ? null : zeroIndex + 1,
+			bottom: zeroIndex + this.size >= this.size ** 2 ? null : zeroIndex + this.size,
+			left: (zeroIndex + 1) % this.size === 1 ? null : zeroIndex - 1
+		}
+		const idx = Object.values(this.availablePositions);
+		
+		for (let i = 0; i < idx.length; i++) {
+			if (targetIndex === idx[i]) {
+				this.moves += 1;
+				this.moveField.textContent = `${this.moves}`;
+				this.playSound(this.sound);
+
+				this.numbers[zeroIndex] = this.numbers[targetIndex];
+				this.numbers[targetIndex] = 0;
+			}
+		}
+
+
+		this.generateItems(this.numbers);
+		let numStr = [...this.numbers].join('');
+		let sortedNumStr = [...this.sortedNumbers.slice(1), this.sortedNumbers[0]].join('');
+
+		if (numStr === sortedNumStr) {
+			this.isGameOver = true;
+
+			this.openMenu(this.menuTrigger, this.menu)
+			this.showGameOver(this.time, this.moves);
+			this.menu.append(this.gameOverScreen);
+			this.showScreen(this.gameOverScreen, this.menu, 'active');
+
+			const results = storage.get('results');
+			const { hours, minutes, seconds } = this.time;
+			const { day, month, year } = this.getCurrentDate();
+
+			const result = {
+				date: `${day}.${month}.${year}`,
+				time: `${hours}:${minutes}:${seconds}`,
+				moves: `${this.moves}`,
+				size: `${this.size}x${this.size}`
+			};
+
+			if (results && results.length) {
+				storage.remove('results');
+				storage.set('results', [...results, result])
+			} else {
+				storage.set('results', [result])
+			}
+		}
 	}
 
 	render() {
@@ -371,8 +449,24 @@ export default class Puzzle {
 
 	generateItems(arr) {
 		if (arr && arr.length) {
-			const cells = arr.map(number =>  create('button', { attributes: [['data-number', `${number}`]] }, `${number}`));
+			const cells = arr.map(number =>  {
+				const draggableValue = number !== 0 ? true : false;
+				return create('button', { attributes: [['data-number', `${number}`], ['draggable', draggableValue]] }, `${number}`)
+			});
 			cells.forEach(cell => this.grid.append(cell));
+			this.cells = [...cells];
+
+			this.cells.forEach(cell => {
+				if (+cell.dataset.number === 0) {
+					cell.addEventListener('dragover', e => {
+						e.preventDefault();
+					}); 
+					cell.addEventListener('drop', e => this.onDrop(e.target));
+				} else {
+					cell.addEventListener('dragstart', e => this.onDragStart(e.target, 'hidden'));
+					cell.addEventListener('dragend', e => this.onDragEnd(e.target, 'hidden'));
+				}
+			});
 		}
 	}
 
