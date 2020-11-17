@@ -264,13 +264,14 @@ export default class Puzzle {
 				create('tr', { classes: ['table__row'] }, null, [
 					...this.savedGamesOptions.map(option =>  create('th', { classes: ['table__head'] }, `${option}`))
 				]),
-				...this.savedGames.map(({ size, time, moves }) => {
+				...this.savedGames.map(({ time: { hours, minutes, seconds }, size, moves }) => {
+					this.loadBtn = create('button', { classes: ['load-btn'] }, 'Load game');
 					return create('tr', { classes: ['table__row'] }, null, [
-						create('td', null, `${size}`),
-						create('td', null, `${time}`),
+						create('td', null, `${hours}:${minutes}:${seconds}`),
 						create('td', null, `${moves}`),
+						create('td', null, `${size}`),
 						create('td', null, null, [
-							create('button', { classes: ['load-btn'] }, 'Load game')
+							this.loadBtn
 						])
 					])
 				})
@@ -344,6 +345,10 @@ export default class Puzzle {
 		]);
 
 		this.sound = create('audio', { attributes: [['src', './assets/sounds/tink.wav']] });
+	}
+
+	loadGame(trigger) {
+		trigger
 	}
 
 	getCurrentDate() {
@@ -503,15 +508,18 @@ export default class Puzzle {
 		const obj = {
 			time: this.time,
 			size: this.size,
-			moves: this.moves
+			moves: this.moves,
+			board: [...this.numbers]
 		};
 
 		if (savedGames && savedGames.length) {
 			storage.remove('savedGames');
-			storage.set('savedGames', JSON.stringify([...savedGames, obj]));
+			storage.set('savedGames', [...savedGames, obj]);
 		} else {
-			storage.set('savedGames', JSON.stringify([obj]));
+			storage.set('savedGames', [obj]);
 		}
+
+		console.log(savedGames);
 	}
 	
 	playSound(audio) {
