@@ -363,14 +363,8 @@ export default class Puzzle {
 
 	generateItems(arr) {
 		if (arr && arr.length) {
-			return arr.map(number => {
-				return new Cell({
-					parent: this.grid, 
-					value: `${number}`,
-					ticks: this.ticks,
-					field: this.moveField
-				}).init()
-			});
+			const cells = arr.map(number =>  create('button', { attributes: [['data-number', `${number}`]] }, `${number}`));
+			cells.forEach(cell => this.grid.append(cell));
 		}
 	}
 

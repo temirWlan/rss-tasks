@@ -2,6 +2,7 @@ import create from '../services/create';
 
 export default class Cell {
 	constructor({ parent, value, ticks, field }) {
+		debugger;
 		this.parent = parent;
 		this.item = create('button', { attributes: [['data-number', `${value}`]] }, value);
 		this.ticks = ticks;
