@@ -406,7 +406,6 @@ export default class Puzzle {
 		}, 5000);		
 
 		const savedGames = storage.get('savedGames'); 
-		console.log(savedGames);
 		const obj = {
 			time: this.time,
 			size: this.size,
