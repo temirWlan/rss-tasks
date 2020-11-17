@@ -118,26 +118,8 @@ gulp.task("copy-sounds", () => {
                 .on("end", browsersync.reload);
 });
 
-gulp.task("watch", () => {
-    browsersync.init({
-		server: "./build",
-		port: 5000,
-		notify: true
-    });
-
-    gulp.watch("./app/index.html", gulp.parallel("copy-html"));
-    gulp.watch("./app/assets/sass/**/*.sass", gulp.parallel("styles"));
-    gulp.watch("./app/assets/img/**/*.*", gulp.parallel("copy-img"));
-    gulp.watch("./app/assets/fonts/**/*.*", gulp.parallel("copy-fonts"));
-    gulp.watch("./app/assets/sounds/**/*.*", gulp.parallel("copy-sounds"));
-    gulp.watch("./app/assets/js/**/*.js", gulp.parallel("build-js"));
-});
-
-gulp.task("build", gulp.series("clean", gulp.parallel("copy-html",
-         "styles", "copy-img", "copy-sounds", "copy-fonts", "build-js")));
-
 gulp.task("build-prod-js", () => {
-    return gulp.src("./src/js/main.js")
+    return gulp.src("./app/assets/js/main.js")
                 .pipe(webpack({
                     mode: "production",
                     output: {
@@ -161,7 +143,28 @@ gulp.task("build-prod-js", () => {
                         ]
                       }
                 }))
-                .pipe(gulp.dest(build));
+                .pipe(gulp.dest(build + 'assets/js'));
 });
+
+gulp.task("watch", () => {
+    browsersync.init({
+		server: "./build",
+		port: 5000,
+		notify: true
+    });
+
+    gulp.watch("./app/index.html", gulp.parallel("copy-html"));
+    gulp.watch("./app/assets/sass/**/*.sass", gulp.parallel("styles"));
+    gulp.watch("./app/assets/img/**/*.*", gulp.parallel("copy-img"));
+    gulp.watch("./app/assets/fonts/**/*.*", gulp.parallel("copy-fonts"));
+    gulp.watch("./app/assets/sounds/**/*.*", gulp.parallel("copy-sounds"));
+    // gulp.watch("./app/assets/js/**/*.js", gulp.parallel("build-js"));
+    gulp.watch("./app/assets/js/**/*.js", gulp.parallel("build-prod-js"));
+});
+
+gulp.task("build", gulp.series("clean", gulp.parallel("copy-html",
+         "styles", "copy-img", "copy-sounds", "copy-fonts", "build-prod-js")));
+
+
 
 gulp.task("default", gulp.parallel("watch", "build"));
