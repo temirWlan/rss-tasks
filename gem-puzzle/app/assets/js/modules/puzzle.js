@@ -1,4 +1,4 @@
-import Cell from './cell';
+// import Cell from './cell';
 import create from '../services/create';
 import { addZero, setCorrectNum } from '../services/services';
 import * as storage from '../services/storage';

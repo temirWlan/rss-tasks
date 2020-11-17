@@ -103,63 +103,6 @@ window.addEventListener('DOMContentLoaded', function () {
 
 /***/ }),
 
-/***/ "./app/assets/js/modules/cell.js":
-/*!***************************************!*\
-  !*** ./app/assets/js/modules/cell.js ***!
-  \***************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Cell; });
-/* harmony import */ var _services_create__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/create */ "./app/assets/js/services/create.js");
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-
-
-var Cell = /*#__PURE__*/function () {
-  function Cell(_ref) {
-    var parent = _ref.parent,
-        value = _ref.value,
-        ticks = _ref.ticks,
-        field = _ref.field;
-
-    _classCallCheck(this, Cell);
-
-    debugger;
-    this.parent = parent;
-    this.item = Object(_services_create__WEBPACK_IMPORTED_MODULE_0__["default"])('button', {
-      attributes: [['data-number', "".concat(value)]]
-    }, value);
-    this.ticks = ticks;
-    this.field = field;
-  }
-
-  _createClass(Cell, [{
-    key: "init",
-    value: function init() {
-      try {
-        if (this.item) {
-          this.parent.append(this.item);
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    }
-  }]);
-
-  return Cell;
-}();
-
-
-
-/***/ }),
-
 /***/ "./app/assets/js/modules/puzzle.js":
 /*!*****************************************!*\
   !*** ./app/assets/js/modules/puzzle.js ***!
@@ -204,10 +147,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! core-js/modules/web.dom-collections.iterator */ "./node_modules/core-js/modules/web.dom-collections.iterator.js");
 /* harmony import */ var core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _cell__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./cell */ "./app/assets/js/modules/cell.js");
-/* harmony import */ var _services_create__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../services/create */ "./app/assets/js/services/create.js");
-/* harmony import */ var _services_services__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../services/services */ "./app/assets/js/services/services.js");
-/* harmony import */ var _services_storage__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../services/storage */ "./app/assets/js/services/storage.js");
+/* harmony import */ var _services_create__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../services/create */ "./app/assets/js/services/create.js");
+/* harmony import */ var _services_services__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../services/services */ "./app/assets/js/services/services.js");
+/* harmony import */ var _services_storage__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../services/storage */ "./app/assets/js/services/storage.js");
 
 
 
@@ -246,7 +188,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-
+// import Cell from './cell';
 
 
 
@@ -267,7 +209,7 @@ var Puzzle = /*#__PURE__*/function () {
       seconds: '00'
     };
     this.ticks = 0;
-    this.size = _services_storage__WEBPACK_IMPORTED_MODULE_20__["get"]('gameSettings') ? +_services_storage__WEBPACK_IMPORTED_MODULE_20__["get"]('gameSettings')['size'] : 3;
+    this.size = _services_storage__WEBPACK_IMPORTED_MODULE_19__["get"]('gameSettings') ? +_services_storage__WEBPACK_IMPORTED_MODULE_19__["get"]('gameSettings')['size'] : 3;
     this.numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8];
     this.sortedNumbers = this.numbers.sort(function (a, b) {
       return a - b;
@@ -321,7 +263,7 @@ var Puzzle = /*#__PURE__*/function () {
       time: '00:02:33',
       moves: '33',
       size: '3x3'
-    }].concat(_toConsumableArray(_services_storage__WEBPACK_IMPORTED_MODULE_20__["get"]('results')));
+    }].concat(_toConsumableArray(_services_storage__WEBPACK_IMPORTED_MODULE_19__["get"]('results')));
     this.savedGames = [{
       time: this.time,
       size: this.size,
@@ -408,7 +350,7 @@ var Puzzle = /*#__PURE__*/function () {
 
           _this.showScreen(_this.gameOverScreen, _this.menu, 'active');
 
-          var results = _services_storage__WEBPACK_IMPORTED_MODULE_20__["get"]('results');
+          var results = _services_storage__WEBPACK_IMPORTED_MODULE_19__["get"]('results');
           var _this$time = _this.time,
               hours = _this$time.hours,
               minutes = _this$time.minutes,
@@ -427,10 +369,10 @@ var Puzzle = /*#__PURE__*/function () {
           };
 
           if (results && results.length) {
-            _services_storage__WEBPACK_IMPORTED_MODULE_20__["remove"]('results');
-            _services_storage__WEBPACK_IMPORTED_MODULE_20__["set"]('results', [].concat(_toConsumableArray(results), [result]));
+            _services_storage__WEBPACK_IMPORTED_MODULE_19__["remove"]('results');
+            _services_storage__WEBPACK_IMPORTED_MODULE_19__["set"]('results', [].concat(_toConsumableArray(results), [result]));
           } else {
-            _services_storage__WEBPACK_IMPORTED_MODULE_20__["set"]('results', [result]);
+            _services_storage__WEBPACK_IMPORTED_MODULE_19__["set"]('results', [result]);
           }
         }
       });
@@ -449,7 +391,7 @@ var Puzzle = /*#__PURE__*/function () {
       this.goBackBtn.addEventListener('click', function () {
         return _this.showScreen(_this.menuNavigation, _this.menu, 'active');
       });
-      this.wrapper = Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('div', {
+      this.wrapper = Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('div', {
         classes: ['wrapper']
       }, null, [this.box, this.sound]);
       document.body.append(this.wrapper);
@@ -461,73 +403,73 @@ var Puzzle = /*#__PURE__*/function () {
         this.listItems = this.list.map(function (_ref) {
           var label = _ref.label,
               path = _ref.path;
-          return Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('li', {
+          return Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('li', {
             classes: ['box__menu-list-item']
-          }, null, [Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('a', {
+          }, null, [Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('a', {
             attributes: [['href', path]]
           }, label)]);
         });
       }
 
-      this.saveBtn = Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('a', {
+      this.saveBtn = Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('a', {
         classes: ['save-btn'],
         attributes: [['href', '#']]
       }, 'save game');
-      this.message = Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('span', {
+      this.message = Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('span', {
         classes: ['message']
       }, 'Do you want to save the game?', [this.saveBtn]); // selected
 
-      this.goBackBtn = Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('button', {
+      this.goBackBtn = Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('button', {
         classes: ['nav-btn']
       }, 'go back');
-      this.menuTrigger = Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('a', {
+      this.menuTrigger = Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('a', {
         classes: ['box__menu-trigger'],
         attributes: [['href', '#']]
       }); // menu navigation
 
-      this.menuNavigation = Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('div', {
+      this.menuNavigation = Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('div', {
         classes: ['screen', 'box__menu-nav', 'active']
-      }, null, [this.message, Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('ul', {
+      }, null, [this.message, Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('ul', {
         classes: ['box__menu-list']
       }, null, _toConsumableArray(this.listItems))]);
       var _this$time2 = this.time,
           hours = _this$time2.hours,
           minutes = _this$time2.minutes,
           seconds = _this$time2.seconds;
-      this.timeField = Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('span', null, "Time: ".concat(hours, ":").concat(minutes, ":").concat(seconds)); // screens
+      this.timeField = Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('span', null, "Time: ".concat(hours, ":").concat(minutes, ":").concat(seconds)); // screens
 
-      this.savedGamesScreen = Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('div', {
+      this.savedGamesScreen = Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('div', {
         classes: ['screen']
-      }, null, [Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('h3', {
+      }, null, [Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('h3', {
         classes: ['box__menu-title']
-      }, 'Saved games'), Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('table', {
+      }, 'Saved games'), Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('table', {
         classes: ['screen__table', 'saved-games-table']
-      }, null, [Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('tr', {
+      }, null, [Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('tr', {
         classes: ['table__row']
       }, null, _toConsumableArray(this.savedGamesOptions.map(function (option) {
-        return Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('th', {
+        return Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('th', {
           classes: ['table__head']
         }, "".concat(option));
       })))].concat(_toConsumableArray(this.savedGames.map(function (_ref2) {
         var size = _ref2.size,
             time = _ref2.time,
             moves = _ref2.moves;
-        return Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('tr', {
+        return Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('tr', {
           classes: ['table__row']
-        }, null, [Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('td', null, "".concat(size)), Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('td', null, "".concat(time)), Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('td', null, "".concat(moves)), Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('td', null, null, [Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('button', {
+        }, null, [Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('td', null, "".concat(size)), Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('td', null, "".concat(time)), Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('td', null, "".concat(moves)), Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('td', null, null, [Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('button', {
           classes: ['load-btn']
         }, 'Load game')])]);
       }))))]);
-      this.scoreScreen = Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('div', {
+      this.scoreScreen = Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('div', {
         classes: ['screen']
-      }, null, [Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('h3', {
+      }, null, [Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('h3', {
         classes: ['box__menu-title']
-      }, 'Best scores'), Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('table', {
+      }, 'Best scores'), Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('table', {
         classes: ['box__menu-table', 'table']
-      }, null, [Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('tr', {
+      }, null, [Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('tr', {
         classes: ['table__row']
       }, null, _toConsumableArray(this.scoreOptions.map(function (option) {
-        return Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('th', {
+        return Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('th', {
           classes: ['table__head']
         }, "".concat(option));
       })))].concat(_toConsumableArray(this.bestScores.map(function (_ref3) {
@@ -535,58 +477,58 @@ var Puzzle = /*#__PURE__*/function () {
             time = _ref3.time,
             moves = _ref3.moves,
             size = _ref3.size;
-        return Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('tr', {
+        return Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('tr', {
           classes: ['table__row']
-        }, null, [Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('td', null, "".concat(date)), Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('td', null, "".concat(time)), Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('td', null, "".concat(moves)), Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('td', null, "".concat(size))]);
+        }, null, [Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('td', null, "".concat(date)), Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('td', null, "".concat(time)), Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('td', null, "".concat(moves)), Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('td', null, "".concat(size))]);
       }))))]);
-      this.rulesScreen = Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('div', {
+      this.rulesScreen = Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('div', {
         classes: ['screen', 'rules-screen']
-      }, null, [Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('h3', {
+      }, null, [Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('h3', {
         classes: ['box__menu-title']
-      }, 'Rules of Gem Puzzle'), Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('p', {
+      }, 'Rules of Gem Puzzle'), Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('p', {
         classes: ['screen__description']
-      }, 'The object of the puzzle is to place the tiles in order by making sliding moves that use the empty space.'), Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('p', {
+      }, 'The object of the puzzle is to place the tiles in order by making sliding moves that use the empty space.'), Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('p', {
         classes: ['screen__description']
       }, 'You can save your game and load it later. Or you can just use pause button. Also you can choose game field size of color in Settings')]);
-      this.modeDropdown = Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('select', {
+      this.modeDropdown = Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('select', {
         classes: ['dropdown']
       }, null, _toConsumableArray(this.gameModes.map(function (_ref4) {
         var size = _ref4.size,
             label = _ref4.label;
-        return Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('option', {
+        return Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('option', {
           classes: ['dropdown__item'],
           attributes: [['data-size', "".concat(size)]]
         }, "".concat(label));
       })));
-      this.settingsScreen = Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('div', {
+      this.settingsScreen = Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('div', {
         classes: ['screen', 'settings-screen']
-      }, null, [Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('h3', {
+      }, null, [Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('h3', {
         classes: ['box__menu-title']
       }, 'Settings'), this.modeDropdown]);
-      this.menu = Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('div', {
+      this.menu = Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('div', {
         classes: ['box__menu']
       }, null, [this.menuNavigation, this.savedGamesScreen, this.scoreScreen, this.rulesScreen, this.settingsScreen // this.gameOverScreen
       ]); // panel
 
-      this.moveField = Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('span', {
+      this.moveField = Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('span', {
         attributes: [['id', 'move']]
       });
-      this.moveDesc = Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('span', null, 'Moves:', [this.moveField]);
-      this.panel = Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('div', {
+      this.moveDesc = Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('span', null, 'Moves:', [this.moveField]);
+      this.panel = Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('div', {
         classes: ['box__panel']
       }, null, [this.menuTrigger, this.moveDesc, this.timeField]); // grid
 
-      this.grid = Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('div', {
+      this.grid = Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('div', {
         classes: ['box__grid']
       });
       this.generateItems(this.numbers);
       this.grid.style.gridTemplateColumns = "repeat(".concat(this.size, ", 1fr)");
       this.grid.style.gridTemplateRows = "repeat(".concat(this.size, ", 1fr)"); // box
 
-      this.box = Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('div', {
+      this.box = Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('div', {
         classes: ['box']
       }, null, [this.panel, this.grid, this.menu]);
-      this.sound = Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('audio', {
+      this.sound = Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('audio', {
         attributes: [['src', './assets/sounds/tink.wav']]
       });
     }
@@ -594,9 +536,9 @@ var Puzzle = /*#__PURE__*/function () {
     key: "getCurrentDate",
     value: function getCurrentDate() {
       var date = new Date();
-      var day = Object(_services_services__WEBPACK_IMPORTED_MODULE_19__["addZero"])(date.getDate()),
-          month = Object(_services_services__WEBPACK_IMPORTED_MODULE_19__["addZero"])(date.getMonth() + 1),
-          year = Object(_services_services__WEBPACK_IMPORTED_MODULE_19__["addZero"])(date.getFullYear());
+      var day = Object(_services_services__WEBPACK_IMPORTED_MODULE_18__["addZero"])(date.getDate()),
+          month = Object(_services_services__WEBPACK_IMPORTED_MODULE_18__["addZero"])(date.getMonth() + 1),
+          year = Object(_services_services__WEBPACK_IMPORTED_MODULE_18__["addZero"])(date.getFullYear());
       return {
         date: date,
         day: day,
@@ -734,7 +676,7 @@ var Puzzle = /*#__PURE__*/function () {
 
       if (arr && arr.length) {
         var cells = arr.map(function (number) {
-          return Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('button', {
+          return Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('button', {
             attributes: [['data-number', "".concat(number)]]
           }, "".concat(number));
         });
@@ -751,9 +693,9 @@ var Puzzle = /*#__PURE__*/function () {
       this.intervalId = setInterval(function () {
         if (_this4.isActive) {
           _this4.initialTime += 1;
-          var seconds = Object(_services_services__WEBPACK_IMPORTED_MODULE_19__["addZero"])(Math.floor(_this4.initialTime % 60)),
-              minutes = Object(_services_services__WEBPACK_IMPORTED_MODULE_19__["addZero"])(Math.floor(_this4.initialTime / 60 % 60)),
-              hours = Object(_services_services__WEBPACK_IMPORTED_MODULE_19__["addZero"])(Math.floor(_this4.initialTime / 60 / 60 % 60));
+          var seconds = Object(_services_services__WEBPACK_IMPORTED_MODULE_18__["addZero"])(Math.floor(_this4.initialTime % 60)),
+              minutes = Object(_services_services__WEBPACK_IMPORTED_MODULE_18__["addZero"])(Math.floor(_this4.initialTime / 60 % 60)),
+              hours = Object(_services_services__WEBPACK_IMPORTED_MODULE_18__["addZero"])(Math.floor(_this4.initialTime / 60 / 60 % 60));
           _this4.time = {
             hours: hours,
             minutes: minutes,
@@ -783,7 +725,7 @@ var Puzzle = /*#__PURE__*/function () {
 
         _this5.message.append(e.target);
       }, 5000);
-      var savedGames = _services_storage__WEBPACK_IMPORTED_MODULE_20__["get"]('savedGames');
+      var savedGames = _services_storage__WEBPACK_IMPORTED_MODULE_19__["get"]('savedGames');
       var obj = {
         time: this.time,
         size: this.size,
@@ -791,10 +733,10 @@ var Puzzle = /*#__PURE__*/function () {
       };
 
       if (savedGames && savedGames.length) {
-        _services_storage__WEBPACK_IMPORTED_MODULE_20__["remove"]('savedGames');
-        _services_storage__WEBPACK_IMPORTED_MODULE_20__["set"]('savedGames', JSON.stringify([].concat(_toConsumableArray(savedGames), [obj])));
+        _services_storage__WEBPACK_IMPORTED_MODULE_19__["remove"]('savedGames');
+        _services_storage__WEBPACK_IMPORTED_MODULE_19__["set"]('savedGames', JSON.stringify([].concat(_toConsumableArray(savedGames), [obj])));
       } else {
-        _services_storage__WEBPACK_IMPORTED_MODULE_20__["set"]('savedGames', JSON.stringify([obj]));
+        _services_storage__WEBPACK_IMPORTED_MODULE_19__["set"]('savedGames', JSON.stringify([obj]));
       }
     }
   }, {
@@ -811,7 +753,7 @@ var Puzzle = /*#__PURE__*/function () {
     key: "selectMode",
     value: function selectMode(size) {
       this.size = size;
-      _services_storage__WEBPACK_IMPORTED_MODULE_20__["set"]('gameSettings', {
+      _services_storage__WEBPACK_IMPORTED_MODULE_19__["set"]('gameSettings', {
         size: this.size
       });
     }
@@ -821,11 +763,11 @@ var Puzzle = /*#__PURE__*/function () {
       var hours = time.hours,
           minutes = time.minutes,
           seconds = time.seconds;
-      this.gameOverScreen = Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('div', {
+      this.gameOverScreen = Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('div', {
         classes: ['screen']
-      }, null, [Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('h3', {
+      }, null, [Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('h3', {
         classes: ['box__menu-title']
-      }, 'Hooray!'), Object(_services_create__WEBPACK_IMPORTED_MODULE_18__["default"])('p', {
+      }, 'Hooray!'), Object(_services_create__WEBPACK_IMPORTED_MODULE_17__["default"])('p', {
         classes: ['screen__description']
       }, "You solved the puzzle in ".concat(hours, ":").concat(minutes, ":").concat(seconds, " time and ").concat(moves, " moves"))]);
     }
